@@ -2,13 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="./Group 1.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -18,11 +22,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Hello SpotifyStats</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <section class="main__page">
+      <h1 class="main__text">
+          Узнай больше о своей музыке
+      </h1>
+      <h3 class="tagline">
+          Полная статистика в один клик.
+      </h3>
+      <a href="./main.html" class="button">
+          <div class="main__button">Войти в ваш Spotify</div>
+      </a>
+  </section>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
