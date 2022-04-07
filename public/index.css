@@ -1,0 +1,61 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+  }
+
+.main__page {
+    min-height: 720px;
+    height: 100vh;
+    background-color: #2941AB;
+    background: url('./Exclude.svg') no-repeat center center;
+    background-size:cover;
+    background-color: #2941AB;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main__text {
+    font-size: 104px;
+    max-width: 942px;
+    font-style: normal;
+    font-weight: 800;
+    text-align: center;
+    line-height: 96px;
+    padding-bottom: 40px;
+    color: white;
+}
+
+.tagline {
+    font-size: 20px;
+    font-weight: 400;
+    padding-bottom: 40px;
+    color: white;
+}
+
+.main__button {
+    border: solid 3px;
+    border-radius: 500px;
+    border-color: #1ED760;
+    padding: 14px 32px;
+    text-transform: uppercase;
+    color: white;
+    transition: 0.5s;
+}
+
+.button {
+    text-decoration: none;
+}
+
+.button:hover .main__button {
+    background-color: #1ED760;
+    color: #2941AB;
+    transition: 0.5s;
+
+}
