@@ -1,4 +1,4 @@
-* {
+.app{
     font-family: 'Montserrat', sans-serif;
     margin: 0;
 }
@@ -22,6 +22,7 @@
 }
 
 .main__text {
+    margin: 0;
     font-size: 104px;
     max-width: 942px;
     font-style: normal;
@@ -33,6 +34,7 @@
 }
 
 .tagline {
+    margin: 0;
     font-size: 20px;
     font-weight: 400;
     padding-bottom: 40px;
