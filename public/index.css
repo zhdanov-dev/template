@@ -1,5 +1,5 @@
 .app{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Jost', sans-serif;
     margin: 0;
 }
 
@@ -8,7 +8,6 @@
   }
 
 .main__page {
-    min-height: 720px;
     height: 100vh;
     background-color: #2941AB;
     background: url('./Exclude.svg') no-repeat center center;
@@ -26,7 +25,7 @@
     font-size: 104px;
     max-width: 942px;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 900;
     text-align: center;
     line-height: 96px;
     padding-bottom: 40px;
@@ -37,7 +36,6 @@
     margin: 0;
     font-size: 20px;
     font-weight: 400;
-    padding-bottom: 40px;
     color: white;
 }
 
@@ -60,4 +58,11 @@
     color: #2941AB;
     transition: 0.5s;
 
+}
+
+.waring {
+    color: yellow;
+    font-weight: 300;
+    text-align: center;
+    padding-bottom: 15px;
 }
