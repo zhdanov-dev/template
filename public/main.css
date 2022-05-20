@@ -32,6 +32,7 @@
 }
 
 .hello {
+    min-height: 100vh;
     text-align: center;
     color: var(--text-color);
 }
@@ -70,7 +71,7 @@
 .main__section {
     display: grid;
     grid-template-columns: 1fr min-content min-content;
-    grid-template-rows: min-content 100vh min-content;
+    grid-template-rows: min-content 1fr min-content;
     justify-content: center;
     column-gap: 30px;
     row-gap: 30px;

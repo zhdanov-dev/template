@@ -25,8 +25,12 @@ const API = (function() {
             headers: { 'Authorization' : 'Bearer ' + token}
         });
 
-        const jsonData = await result.json();
-        return jsonData.categories.items;
+        if (result.ok) {
+            const jsonData = await result.json();
+            return jsonData.categories.items;
+        }
+        else 
+            throw new Error(`${result.status}: ${result.statusText}`);
     }
 
     const _getPlaylistByGenre = async (token, genreId) => {
@@ -37,8 +41,12 @@ const API = (function() {
             headers: { 'Authorization' : 'Bearer ' + token}
         });
 
-        const jsonData = await result.json();
-        return jsonData.playlists.items;
+        if (result.ok) {
+            const jsonData = await result.json();
+            return jsonData.playlists.items;
+        }
+        else 
+            throw new Error(`${result.status}: ${result.statusText}`);
     }
 
     const _getTracks = async (token, tracksEndPoint) => {
@@ -49,8 +57,12 @@ const API = (function() {
             headers: { 'Authorization' : 'Bearer ' + token}
         });
 
-        const jsonData = await result.json();
-        return jsonData.items;
+        if (result.ok) {
+            const jsonData = await result.json();
+            return jsonData.items;
+        }
+        else 
+            throw new Error(`${result.status}: ${result.statusText}`);
     }
 
     return {
@@ -161,8 +173,15 @@ const APP = (function(Interface, API) {
     // загрузка жанров
     const action = Interface.clickAction();
     const loadGenres = async () => {
-        const token = await API.getToken();           
-        getCashToken(token);
+        const token = String(await API.getToken());
+        // я могу проверить не пустой ли токен, также отличие в длинне укажет на неверный токен
+        // я понимаю, что время жизни токена один час, но не понимаю, как лучше сделать его обновление
+        // возможно стоит вызывать функцию загрузки токена каждый час..
+        if (token == null || token.length != 83) {
+            throw new SyntaxError("Неверный токен", console.log(token));
+        }     
+        else getCashToken(token);
+        console.log(token);
         const genres = await API.getGenres(token);
         genres.forEach(element => Interface.createGenre(element.name, element.id, element.icons[0].url));
     }
@@ -172,7 +191,11 @@ const APP = (function(Interface, API) {
         let targetClick = e.target.classList[1];
         Interface.resetPlaylist();
         const token = cashToken;      
-        const genreId = targetClick;             
+        const genreId = targetClick;
+        console.log(token);
+        if (genreId == null || genreId == undefined) {
+            throw new SyntaxError("Неверный id жанра", console.log(genreId));
+        }            
         const playlist = await API.getPlaylistByGenre(token, genreId);
         playlist.forEach(playlist => Interface.createPlaylist(playlist.name, playlist.tracks.href, playlist.images[0].url));
         document.querySelector('.main__section').classList.add('two__collum');
@@ -183,18 +206,21 @@ const APP = (function(Interface, API) {
         Interface.resetTracks();
         const token = cashToken;        
         let targetClick = e.target.classList[1];
+        if (targetClick == null || targetClick == undefined) {
+            throw new SyntaxError("Неверный end-point трека", console.log(targetClick));
+        } 
         const tracks = await API.getTracks(token, targetClick);
         tracks.forEach(element => Interface.createTrack(element.track.name, element.track.artists[0].name, element.track.album.images[0].url, element.track.external_urls.spotify)); 
     });
 
     return {
         start() {
+            // "запускаем" приложение, загружая список жанров
             loadGenres();
         }
     }
 
 })(Interface, API);
-// "запускаем" приложение, загружая список жанров
 
 const start = document.querySelector('.start');
 start.addEventListener('click', () => {
