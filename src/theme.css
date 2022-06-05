@@ -1,0 +1,46 @@
+:root[data-theme="light"] {
+    --background-color: #ffffff;
+    --text-color: #000000;
+
+    --color1: #f6f6f6;
+    --color2: #e7e7e7;
+    --color3: #dfdfdf;
+  }
+  
+  :root[data-theme="dark"] {
+    --background-color: #111111;
+    --text-color: #eeeeee;
+    --color1: #181818;
+    --color2: #242424;
+    --color3: #121212;
+  }
+  
+  body {
+    background: var(--background-color);
+    color: var(--text-color);
+  }
+
+  .header__link {
+    color: var(--text-color);
+  }
+
+  .text__logo {
+    color: var(--text-color);
+  }
+
+  #content__track {
+    color: var(--text-color);
+  }
+
+  #container {
+    background-color: var(--color1);
+  }
+
+  #container:hover {
+    background-color: var(--color2);
+    transition: 0.3s;
+  }
+
+  #img__tarck {
+    box-shadow: 0px 0px 10px 0.5px var(--color3);
+  }
