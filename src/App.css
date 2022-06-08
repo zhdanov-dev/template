@@ -132,23 +132,25 @@
   transition: 0.5s;
 }
 
-#img__tarck {
+.img__tarck {
   max-width: 150px;
   border-radius: 7px;
 }
 
-#content__track {
+.content__track {
   width: 350px;
   display: flex;
   align-items: center;
   text-align: center;
   font-size: 18px;
+  text-decoration: none;
 }
 
-#name {
+.name {
   width: 150px;
   padding-left: 30px;
   text-align: center;
+  text-decoration: none;
 }
 
 .p__size {
@@ -159,7 +161,7 @@
   font-weight: 500;
 }
 
-#container {
+.container {
   margin-bottom: 20px;
   position: relative;
   width: 350px;

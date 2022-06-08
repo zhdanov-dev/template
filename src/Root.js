@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Playlist from './Playlist';
 import Genre from './Genre';
 import Traks from './Traks';
-import { Client } from './Client';
+import { ClientId, ClientSecret } from './Client';
 import axios from 'axios';
 
 import { ThemeContext, themes } from './ThemeContext'
@@ -10,23 +10,31 @@ import Toggle from './Toggle'
 
 const Root = () => {
   
-  const spotify = Client();  
+  const controller = new AbortController();
 
   const [token, setToken] = useState('');  
   const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []});
   const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []});
   const [tracks, setTracks] = useState({selectedTrack: '', listOfTracksFromAPI: []});
 
-
   useEffect(() => {
 
     axios('https://accounts.spotify.com/api/token', {
       headers: {
         'Content-Type' : 'application/x-www-form-urlencoded',
-        'Authorization' : 'Basic ' + btoa(spotify.ClientId + ':' + spotify.ClientSecret)      
+        'Authorization' : 'Basic ' + btoa(ClientId + ':' + ClientSecret)      
       },
       data: 'grant_type=client_credentials',
       method: 'POST'
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+      if (error.request) {
+        console.log(error.request);
+      }
     })
     .then(tokenResponse => {      
       setToken(tokenResponse.data.access_token);
@@ -35,16 +43,25 @@ const Root = () => {
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + tokenResponse.data.access_token}
       })
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+        }
+        if (error.request) {
+          console.log(error.request);
+        }
+      })
       .then (genreResponse => {        
         setGenres({
           selectedGenre: genres.selectedGenre,
           listOfGenresFromAPI: genreResponse.data.categories.items,
         })
       });
-      
+      controller.abort();
     });
 
-  }, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret]); 
+  }, [genres.selectedGenre, ClientId, ClientSecret]); 
 
   const genreChanged = val => {
     let col = document.querySelector(".main__section");
@@ -58,32 +75,45 @@ const Root = () => {
       method: 'GET',
       headers: { 'Authorization' : 'Bearer ' + token}
     })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+      if (error.request) {
+        console.log(error.request);
+      }
+    })
     .then(playlistResponse => {
       setPlaylist({
         selectedPlaylist: playlist.selectedPlaylist,
         listOfPlaylistFromAPI: playlistResponse.data.playlists.items
       })
     });
-
-
+    controller.abort();
   }
 
-  const playlistChanged = val => {
+  const buttonClicked = val => {
     let col = document.querySelector(".main__section");
     col.classList.add("three__collum");
     setPlaylist({
       selectedPlaylist: val,
       listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
     });
-  }
 
-  const buttonClicked = e => {
-    e.preventDefault();
-
-    axios(`https://api.spotify.com/v1/playlists/${playlist.selectedPlaylist}/tracks?limit=10`, {
+    axios(`https://api.spotify.com/v1/playlists/${val}/tracks?limit=10`, {
       method: 'GET',
       headers: {
         'Authorization' : 'Bearer ' + token
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+      if (error.request) {
+        console.log(error.request);
       }
     })
     .then(tracksResponse => {
@@ -92,6 +122,7 @@ const Root = () => {
         listOfTracksFromAPI: tracksResponse.data.items
       })
     });
+    controller.abort();
   }
 
   const handleClick = e => {
@@ -107,7 +138,7 @@ const Root = () => {
     
     <div className='app'>
         <div className="main__container">
-          <div onClick={buttonClicked} className="main__section">
+          <div className="main__section">
             <header className="main__header">
               <div className="main__logo">
                 <a className="logo__link link__decoration" href="#">
@@ -152,9 +183,9 @@ const Root = () => {
               </h2>
               <div onClick={handleClick} className="start">Let's Go!</div>
             </div>
-		          <Genre label="Genre :"  options={genres.listOfGenresFromAPI} selectedValue={genres.selectedGenre} changed={genreChanged} />
-		          <Playlist label="Playlist :" options={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} changed={playlistChanged}  />
-		          <Traks items={tracks.listOfTracksFromAPI}  />                          
+		          <Genre label="Genre" items={genres.listOfGenresFromAPI} selectedValue={genres.selectedGenre} onClick={genreChanged} />
+		          <Playlist label="Playlist" items={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} onClick={buttonClicked}  />
+		          <Traks items={tracks.listOfTracksFromAPI} />                          
           </div>
         </div>
         <hr className="hr" />
