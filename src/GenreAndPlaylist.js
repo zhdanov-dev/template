@@ -1,19 +1,19 @@
 import React from 'react';
 
-const Playlist = props => {    
+const GenreAndPlaylist = props => {    
 
-    const playListClick = e => {
+    const genreClick = e => {
         props.onClick(e.target.title);
-    }    
+    }
 
     return (
-        <section id={props.selectedValue} className="collum collum__hidden" onClick={playListClick}>
+        <section id={props.selectedValue} className="collum collum__hidden" onClick={genreClick}>
         <a className="link__decoration link__track hover__track link__one" href="#">
           <div>
             {props.items.map((item, idx) => 
-            <div className="container" key={idx + 1} title={item.id} >
+            <div className="container" key={idx + 1} title={item.id}>
               <div className="content__track" title={item.id}>
-                <img className="img__tarck" title={item.id} src={item.images[0].url}/>
+                <img className="img__tarck" title={item.id} src={item.icons ? item.icons[0].url : item.images[0].url}/>
                 <div className="name" title={item.id}>{item.name}</div>
               </div>
             </div>)}
@@ -23,4 +23,4 @@ const Playlist = props => {
     );
 }
 
-export default Playlist;
+export default GenreAndPlaylist;

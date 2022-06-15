@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Playlist from './Playlist';
-import Genre from './Genre';
+import React, { useState, useEffect, useRef } from 'react';
+import GenreAndPlaylist from './GenreAndPlaylist';
 import Traks from './Traks';
 import { ClientId, ClientSecret } from './Client';
 import axios from 'axios';
@@ -12,6 +11,10 @@ const Root = () => {
   
   const controller = new AbortController();
 
+  const [collum, setCollum] = useState(0);
+  const collumRef = useRef(collum);
+  collumRef.current = collum;
+
   const [token, setToken] = useState('');  
   const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []});
   const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []});
@@ -20,6 +23,7 @@ const Root = () => {
   useEffect(() => {
 
     axios('https://accounts.spotify.com/api/token', {
+      signal: controller.signal,
       headers: {
         'Content-Type' : 'application/x-www-form-urlencoded',
         'Authorization' : 'Basic ' + btoa(ClientId + ':' + ClientSecret)      
@@ -38,8 +42,8 @@ const Root = () => {
     })
     .then(tokenResponse => {      
       setToken(tokenResponse.data.access_token);
-
       axios('https://api.spotify.com/v1/browse/categories?locale=sv_RU', {
+        signal: controller.signal,
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + tokenResponse.data.access_token}
       })
@@ -60,18 +64,20 @@ const Root = () => {
       });
       controller.abort();
     });
-
   }, [genres.selectedGenre, ClientId, ClientSecret]); 
 
-  const genreChanged = val => {
-    let col = document.querySelector(".main__section");
-    col.classList.add("two__collum");
+  const GenreChanged = (val) => {
+    setTimeout(() => {
+      setCollum(() => 2);
+      if (collumRef.current === 2) document.querySelector(".main__section").classList.add("two__collum");
+    });
     setGenres({
       selectedGenre: val, 
       listOfGenresFromAPI: genres.listOfGenresFromAPI
     });
 
     axios(`https://api.spotify.com/v1/browse/categories/${val}/playlists?limit=10`, {
+      signal: controller.signal,
       method: 'GET',
       headers: { 'Authorization' : 'Bearer ' + token}
     })
@@ -94,14 +100,17 @@ const Root = () => {
   }
 
   const buttonClicked = val => {
-    let col = document.querySelector(".main__section");
-    col.classList.add("three__collum");
+    setTimeout(() => {
+      setCollum(() => 3);
+      if (collumRef.current === 3) document.querySelector(".main__section").classList.add("three__collum");
+    });
     setPlaylist({
       selectedPlaylist: val,
       listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
     });
 
     axios(`https://api.spotify.com/v1/playlists/${val}/tracks?limit=10`, {
+      signal: controller.signal,
       method: 'GET',
       headers: {
         'Authorization' : 'Bearer ' + token
@@ -183,8 +192,8 @@ const Root = () => {
               </h2>
               <div onClick={handleClick} className="start">Let's Go!</div>
             </div>
-		          <Genre label="Genre" items={genres.listOfGenresFromAPI} selectedValue={genres.selectedGenre} onClick={genreChanged} />
-		          <Playlist label="Playlist" items={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} onClick={buttonClicked}  />
+		          <GenreAndPlaylist label="Genre" items={genres.listOfGenresFromAPI} selectedValue={genres.selectedGenre} onClick={GenreChanged} />
+		          <GenreAndPlaylist label="Playlist" items={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} onClick={buttonClicked}  />
 		          <Traks items={tracks.listOfTracksFromAPI} />                          
           </div>
         </div>
