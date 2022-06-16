@@ -3,7 +3,7 @@ import React from 'react';
 const Tracks = props => {
 
     return (
-        <section className="collum collum__hidden">
+        <section className={props.collums}>
             <div>
                 {
                     props.items.map((item, idx) => 

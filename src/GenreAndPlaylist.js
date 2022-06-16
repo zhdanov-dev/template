@@ -7,7 +7,7 @@ const GenreAndPlaylist = props => {
     }
 
     return (
-        <section id={props.selectedValue} className="collum collum__hidden" onClick={genreClick}>
+        <section id={props.selectedValue} className={props.collums} onClick={genreClick}>
         <a className="link__decoration link__track hover__track link__one" href="#">
           <div>
             {props.items.map((item, idx) => 
