@@ -1,0 +1,318 @@
+.app {
+  margin: 0;
+  font-family: 'Jost', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.hello {
+  min-height: 100vh;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.hello__hidden {
+  display: none;
+}
+
+.collum__hidden {
+  display: none;
+}
+
+.gap {
+  grid-gap: 30px;
+}
+
+.start {
+  margin: 50px auto;
+  max-width: 200px;
+  border: solid 3px;
+  border-radius: 500px;
+  border-color: #1ED760;
+  padding: 14px 32px;
+  transition: 0.5s;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.start:hover {
+  background-color: #1ED760;
+
+  transition: 0.5s;
+
+}
+
+.main__container {
+  margin: auto;
+  max-width: 1230px;
+  padding: 0px 30px 0px;
+}
+
+.main__section {
+  display: grid;
+  grid-template-columns: 1fr min-content min-content;
+  grid-template-rows: min-content 1fr min-content;
+  justify-content: center;
+}
+
+.two__collum {
+  grid-template-columns: 1fr 1fr min-content;
+}
+
+.three__collum {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.link__decoration {
+  text-decoration: none;
+}
+
+
+.main__header {
+  grid-column: 1 / 4;
+  display: flex;
+  padding: 20px 10px 20px 10px;
+  font-size: 18px;
+  font-weight: 400;
+  align-items: center;
+}
+
+.main__logo {
+  padding-right: 35px;
+}
+
+.logo__link {
+  display: flex;
+}
+
+.img__logo {
+  margin-right: 10px;
+  max-width: 16px;
+}
+
+.text__logo {
+  color: #191414;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.hover__link {
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.header__link {
+  margin-right: 15px;
+}
+.hover__link::after { 
+  content: "";
+  position: absolute;
+  height: 1px;
+  background-color: #1ED760;
+  width: 0;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) all;
+
+  margin-bottom: -3px;
+}
+
+.hover__link:hover::after { width: 100%; }
+
+.main__account {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.link__track {
+  display: flex;
+  transition: 0.5s;
+}
+
+.img__tarck {
+  max-width: 150px;
+  border-radius: 7px;
+}
+
+.content__track {
+  width: 350px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.name {
+  width: 150px;
+  padding-left: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.p__size {
+  max-width: 110px;
+}
+
+.name__track {
+  font-weight: 500;
+}
+
+.container {
+  margin-bottom: 20px;
+  position: relative;
+  width: 350px;
+  display: flex;
+  padding: 20px;
+  border-radius: 5px;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.container__action {
+  background-color: var(--color1-dark);
+}
+
+.collum {
+  justify-self: center;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.theme__acc {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+.theme__icon {
+  display: flex;
+  align-self: center;
+}
+
+.button {
+  margin-right: 15px;
+  align-self: center;
+cursor: pointer;
+  transition: .5s;
+}
+
+.color__btn {
+  color: white;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hr {
+  margin-top: 30px;
+  border-top: #000000;
+}
+
+.footer {
+  display: flex;
+  margin: auto;
+  max-width: 1024px;
+}
+
+.footer__content {
+  padding: 70px 16px;
+}
+
+.label {
+  display: flex;
+  align-self: center;
+}
+
+
+@media screen and (max-width: 1250px) {
+  .app {
+      font-size: 14px;
+  }
+
+  .text__logo {
+      font-size: 16px;
+  }
+
+  .main__header {
+      font-size: 14px;
+      padding: 20px 16px;
+  }
+
+  .img__tarck {
+      max-width: 150px;
+  }
+
+  .main__logo {
+      padding-right: 30px;
+  }
+
+  .img__logo {
+      max-width: 14px;
+      margin-right: 8px;
+  }
+
+  .material-symbols-outlined {
+      font-size: 20px !important;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+
+  .img__tarck {
+      max-width: 100px;
+  }
+
+  .text__logo {
+      font-size: 12px;
+  }
+
+  .main__logo {
+      padding-right: 25px;   
+  }
+
+  .img__logo {
+      max-width: 10px;
+      margin-right: 6px;
+  }
+
+  .material-symbols-outlined {
+      font-size: 16px !important;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .app {
+      font-size: 8px;
+  }
+
+  .main__header {
+      font-size: 8px;
+      padding: 12px 16px;
+  }
+
+  .text__logo {
+      font-size: 9px;
+  }
+
+  .img__tarck {
+      max-width: 75px;
+  }
+
+  .main__logo {
+      padding-right: 15px;
+  }
+
+  .img__logo {
+      max-width: 8px;
+      margin-right: 4px;
+  }
+
+  .material-symbols-outlined {
+      font-size: 10px !important;
+  }
+}
